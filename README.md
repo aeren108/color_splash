@@ -1,11 +1,15 @@
 # Color_Splash
-color_splash provides you to achieve color splash effect as known as selective color effect in your images.<br>
-Here are some example images created by color_splash:
+------
+color_splash provides you to achieve color splash effect as known as selective color effect in your images.
 
-![](sahil.JPG)
-![](sahilh.JPG)
-![](telefon.jpg)
-![](telefonh.jpg)
+## Examples
+Here are some example images created by color_splash:<br>
 
-# Screenshots
-![](ss1.jpg)
+![](pics/sahil.JPG)
+![](pics/sahilh.JPG)
+<br>
+![](pics/telefon.jpg)
+![](pics/telefonh.jpg)
+
+## Screenshots
+![](pics/ss1.jpg)
