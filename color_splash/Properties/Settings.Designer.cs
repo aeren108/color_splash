@@ -8,7 +8,7 @@
 // </auto-generated>
 //------------------------------------------------------------------------------
 
-namespace color_splash.Properties
+namespace ColorSplash.Properties
 {
 
 

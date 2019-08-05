@@ -9,49 +9,52 @@ using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
 
-namespace color_splash {
+namespace ColorSplash {
 
-    class ImageHandler {
+    class ImageProcessor {
 
-        private Bitmap bmp;
-        private Bitmap highlightedBmp;
+        private Bitmap bitmap;
+        public Bitmap buffer;
         private BitmapData data;
 
         private Rectangle rect;
         private Color c;
-        private Color cr;
-        private Color cb;
 
-        public bool isSensitive = false;
+        public const int HIGH = 2;
+        public const int NORMAL = 1;
+        public const int LOW = 0;
+        public int sensivity = 1;
 
-        //Colors that can be highlighted with their hue min and max values
-        public static int[] RED = { 20, 330, 30, 320 };
-        public static int[] ORANGE_YELLOW = { 20, 60, 18, 80 };
-        public static int[] GREEN = { 60, 175, 40, 180 };
-        public static int[] BLUE = { 175, 275, 165, 285 };
-        public static int[] PURPLE_PINK = { 260, 325, 250, 340 };
+        private int a = 0; //Used to acces low high and normal sensivity's min and max hue values
 
-        
-        public ImageHandler(Bitmap bmp) {
-            this.bmp = bmp;
+        //Colors that can be highlighted and their max and min hue values.
+        //Second and third indexes are for high sensivity, last 2 indexes are for low sensivity first 2 indexes are for normal sensivity 
+        public static readonly int[] RED = { 20, 330, 30, 320, 16, 340 };
+        public static readonly int[] ORANGE_YELLOW = { 20, 60, 18, 80, 30, 50 };
+        public static readonly int[] GREEN = { 60, 175, 40, 180, 70, 165 };
+        public static readonly int[] BLUE = { 175, 275, 165, 285, 185, 265 };
+        public static readonly int[] PURPLE_PINK = { 260, 325, 250, 340, 270, 315 };
+
+        public ImageProcessor(Bitmap bmp) {
+            this.bitmap = bmp;
             rect = new Rectangle(0, 0, bmp.Width, bmp.Height);
         }
 
-        public ImageHandler() {
-            this.bmp = null;
-            
+        public ImageProcessor() {
+            this.bitmap = null;
         }
 
         public Bitmap HighlightColor(int[] colorRange) {
-            highlightedBmp =  (Bitmap) bmp.Clone();
+            buffer =  (Bitmap) bitmap.Clone();
 
-            
             byte[] pixels = GetPixels();
 
-            int a = 0;
-            
-            if (isSensitive)
+            if (sensivity == HIGH)
                 a = 2;
+            else if (sensivity == LOW)
+                a = 4;
+            else
+                a = 0;
 
             for(int i = 2; i < pixels.Length; i += 3) {
                 int red = pixels[i];
@@ -84,7 +87,7 @@ namespace color_splash {
 
             savePixels(pixels);
 
-            return highlightedBmp;
+            return buffer;
         }
 
         private Bitmap ChangeAlpha(Bitmap bitmap, float value) {
@@ -98,7 +101,7 @@ namespace color_splash {
             ImageAttributes imgAttribute = new ImageAttributes();
             imgAttribute.SetColorMatrix(colorMatrix, ColorMatrixFlag.Default, ColorAdjustType.Bitmap);
             graphics.DrawImage(bitmap, new Rectangle(0, 0, b.Width, b.Height), 0, 0, bitmap.Width, bitmap.Height, GraphicsUnit.Pixel, imgAttribute);
-            graphics.Dispose();   // Releasing all resource used by graphics 
+            graphics.Dispose();
       
             return b;
         }
@@ -117,42 +120,35 @@ namespace color_splash {
         }
 
         private byte[] GetPixels() {
-            if (highlightedBmp == null)
+            if (buffer == null)
                 throw new NullReferenceException();
 
-            data = highlightedBmp.LockBits(rect, ImageLockMode.ReadWrite, highlightedBmp.PixelFormat);
-            byte[] pixels = new byte[highlightedBmp.Width * highlightedBmp.Height * 3];
-            Marshal.Copy(data.Scan0, pixels, 0, highlightedBmp.Width * highlightedBmp.Height * 3);
+            data = buffer.LockBits(rect, ImageLockMode.ReadWrite, buffer.PixelFormat);
+            byte[] pixels = new byte[buffer.Width * buffer.Height * 3];
+            Marshal.Copy(data.Scan0, pixels, 0, buffer.Width * buffer.Height * 3);
 
             return pixels;
         }
 
         private void savePixels(byte[] pixels) {
-            if (highlightedBmp == null)
+            if (buffer == null)
                 throw new NullReferenceException();
 
-            Marshal.Copy(pixels, 0, data.Scan0, highlightedBmp.Width * highlightedBmp.Height * 3);
-            highlightedBmp.UnlockBits(data);
+            Marshal.Copy(pixels, 0, data.Scan0, buffer.Width * buffer.Height * 3);
+            buffer.UnlockBits(data);
         }
 
-        public Bitmap BMP {
+        public Bitmap Image {
             get {
-                return bmp;
+                return bitmap;
             }
 
             set {
-                bmp = value;
+                bitmap = value;
                 if (value != null)
-                    rect = new Rectangle(0, 0, bmp.Width, bmp.Height);
-                highlightedBmp = null;
+                    rect = new Rectangle(0, 0, bitmap.Width, bitmap.Height);
+                buffer = null;
             }
         }
-
-        public Bitmap highlightedBMP {
-            get {
-                return highlightedBmp;
-            }
-        }
-
     }
 }
