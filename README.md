@@ -8,4 +8,4 @@ Here are some example images created by color_splash:
 ![](telefonh.jpg)
 
 # Screenshots
-
+![](ss1.jpg)
