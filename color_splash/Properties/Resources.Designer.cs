@@ -8,7 +8,7 @@
 // </auto-generated>
 //------------------------------------------------------------------------------
 
-namespace ColorSplash.Properties {
+namespace color_splash.Properties {
     using System;
     
     
@@ -63,9 +63,9 @@ namespace ColorSplash.Properties {
         /// <summary>
         ///   System.Drawing.Bitmap türünde yerelleştirilmiş bir kaynak arar.
         /// </summary>
-        internal static System.Drawing.Bitmap placeholder {
+        internal static System.Drawing.Bitmap instructions {
             get {
-                object obj = ResourceManager.GetObject("placeholder", resourceCulture);
+                object obj = ResourceManager.GetObject("instructions", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }

@@ -1,13 +1,12 @@
 ﻿using ColorSplash.Properties;
+using ColorSplash.UI;
 using System;
 using System.ComponentModel;
 using System.Drawing;
 using System.Windows.Forms;
 
-namespace ColorSplash
-{
-    partial class MainForm
-    {
+namespace ColorSplash.Forms {
+    partial class MainForm {
         /// <summary>
         ///Gerekli tasarımcı değişkeni.
         /// </summary>
@@ -54,7 +53,7 @@ namespace ColorSplash
             this.toolStripButton3 = new System.Windows.Forms.ToolStripButton();
             this.backgroundWorker1 = new System.ComponentModel.BackgroundWorker();
             this.pictureBox1 = new System.Windows.Forms.PictureBox();
-            this.snackbar = new ColorSplash.Snackbar();
+            this.snackbar = new ColorSplash.UI.Snackbar();
             this.menuStrip1.SuspendLayout();
             this.toolStrip1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).BeginInit();
@@ -204,7 +203,6 @@ namespace ColorSplash
             this.colorChooser.Margin = new System.Windows.Forms.Padding(10, 0, 1, 0);
             this.colorChooser.Name = "colorChooser";
             this.colorChooser.Size = new System.Drawing.Size(159, 28);
-            this.colorChooser.Text = "Red";
             this.colorChooser.SelectedIndexChanged += new System.EventHandler(this.ColorChooser_SelectedIndexChanged);
             // 
             // showOriginal
@@ -235,7 +233,7 @@ namespace ColorSplash
             this.pictureBox1.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
             | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
-            this.pictureBox1.Image = global::ColorSplash.Properties.Resources.placeholder;
+            this.pictureBox1.Image = global::color_splash.Properties.Resources.instructions;
             this.pictureBox1.Location = new System.Drawing.Point(16, 73);
             this.pictureBox1.Margin = new System.Windows.Forms.Padding(4);
             this.pictureBox1.Name = "pictureBox1";
@@ -254,7 +252,7 @@ namespace ColorSplash
             this.snackbar.TabIndex = 4;
             this.snackbar.Visible = false;
             // 
-            // Form1
+            // MainForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
@@ -266,7 +264,7 @@ namespace ColorSplash
             this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
             this.MainMenuStrip = this.menuStrip1;
             this.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
-            this.Name = "Form1";
+            this.Name = "MainForm";
             this.Text = "Color Splash v1.0";
             this.menuStrip1.ResumeLayout(false);
             this.menuStrip1.PerformLayout();

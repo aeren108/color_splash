@@ -1,15 +1,10 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.Drawing;
 using System.Drawing.Drawing2D;
 using System.Drawing.Imaging;
-using System.Linq;
 using System.Runtime.InteropServices;
-using System.Text;
-using System.Threading;
-using System.Threading.Tasks;
 
-namespace ColorSplash {
+namespace ColorSplash.Helpers {
 
     class ImageProcessor {
 
@@ -45,7 +40,7 @@ namespace ColorSplash {
         }
 
         public Bitmap HighlightColor(int[] colorRange) {
-            buffer =  (Bitmap) bitmap.Clone();
+            buffer = (Bitmap)bitmap.Clone();
 
             byte[] pixels = GetPixels();
 
@@ -56,7 +51,7 @@ namespace ColorSplash {
             else
                 a = 0;
 
-            for(int i = 2; i < pixels.Length; i += 3) {
+            for (int i = 2; i < pixels.Length; i += 3) {
                 int red = pixels[i];
                 int green = pixels[i - 1];
                 int blue = pixels[i - 2];
@@ -64,7 +59,7 @@ namespace ColorSplash {
                 c = Color.FromArgb(255, red, green, blue);
 
                 float hue = c.GetHue();
-                int grayscale = (int)(red*0.299 + green*0.587 + blue*0.114);
+                int grayscale = (int)(red * 0.299 + green * 0.587 + blue * 0.114);
 
                 if (colorRange != RED) {
                     if (hue > colorRange[0 + a] && hue < colorRange[1 + a]) {
@@ -102,7 +97,7 @@ namespace ColorSplash {
             imgAttribute.SetColorMatrix(colorMatrix, ColorMatrixFlag.Default, ColorAdjustType.Bitmap);
             graphics.DrawImage(bitmap, new Rectangle(0, 0, b.Width, b.Height), 0, 0, bitmap.Width, bitmap.Height, GraphicsUnit.Pixel, imgAttribute);
             graphics.Dispose();
-      
+
             return b;
         }
 
@@ -145,8 +140,10 @@ namespace ColorSplash {
 
             set {
                 bitmap = value;
+
                 if (value != null)
                     rect = new Rectangle(0, 0, bitmap.Width, bitmap.Height);
+
                 buffer = null;
             }
         }

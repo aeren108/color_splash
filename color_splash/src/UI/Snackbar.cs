@@ -1,17 +1,10 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.ComponentModel;
-using System.Drawing;
-using System.Data;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows.Forms;
 
-namespace ColorSplash {
+namespace ColorSplash.UI {
     public partial class Snackbar : UserControl {
 
-        private bool isShowing;
+        public bool isShowing;
         private float counter = 0;
         private float duration;
 
@@ -24,7 +17,7 @@ namespace ColorSplash {
 
         public void show(string text, float duration) {
             if (isShowing)
-                timer.Stop();
+                end();
 
             this.duration = duration;
             this.text.Text = text.ToUpper();
@@ -38,22 +31,19 @@ namespace ColorSplash {
         private void end() {
             timer.Stop();
             counter = 0;
+
             isShowing = false;
             this.Visible = false;
 
             this.Update();
-
-            Console.WriteLine("Bitti...");
         }
 
         private void Timer_Tick(object sender, EventArgs e) {
-            //Timer's interval is 100 milisecons, so this method will run every 100 miliseconds (0.1 sec)
+            //Timer's interval is 100 milisecons (100 miliseconds = 0.1 second)
             counter += 0.1f;
-           
-            if (counter >= duration) {
-                
-                end();
 
+            if (counter >= duration) {
+                end();
             }
         }
     }

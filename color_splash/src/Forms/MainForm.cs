@@ -1,16 +1,11 @@
-﻿using System;
+﻿using ColorSplash.Helpers;
+using System;
 using System.Collections.Generic;
-using System.ComponentModel;
-using System.Data;
 using System.Drawing;
-using System.Linq;
 using System.Runtime.InteropServices;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows.Forms;
 
-namespace ColorSplash
-{
+namespace ColorSplash.Forms {
     public partial class MainForm : Form {
 
         private OpenFileDialog fileChooser;
@@ -20,6 +15,7 @@ namespace ColorSplash
         private string path;
 
         public MainForm() {
+
             InitializeComponent();
 
             processor = new ImageProcessor();
@@ -112,6 +108,7 @@ namespace ColorSplash
         private void HighSensitivityToolStripMenuItem_Click(object sender, EventArgs e) {
             ToolStripMenuItem item = sender as ToolStripMenuItem;
             item.Checked = true;
+
             lowSensitivityToolStripMenuItem.Checked = false;
             normalSensitivityToolStripMenuItem.Checked = false;
 
@@ -125,6 +122,7 @@ namespace ColorSplash
         private void NormalSensitivityToolStripMenuItem_Click(object sender, EventArgs e) {
             ToolStripMenuItem item = sender as ToolStripMenuItem;
             item.Checked = true;
+
             highSensitivityToolStripMenuItem.Checked = false;
             lowSensitivityToolStripMenuItem.Checked = false;
 
@@ -138,6 +136,7 @@ namespace ColorSplash
         private void LowSensitivityToolStripMenuItem_Click(object sender, EventArgs e) {
             ToolStripMenuItem item = sender as ToolStripMenuItem;
             item.Checked = true;
+
             highSensitivityToolStripMenuItem.Checked = false;
             normalSensitivityToolStripMenuItem.Checked = false;
 

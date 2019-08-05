@@ -1,6 +1,6 @@
 ﻿using System.Drawing;
 
-namespace ColorSplash {
+namespace ColorSplash.UI {
     partial class Snackbar {
         /// <summary> 
         ///Gerekli tasarımcı değişkeni.
@@ -52,7 +52,7 @@ namespace ColorSplash {
             this.text.Name = "text";
             this.text.Size = new System.Drawing.Size(706, 69);
             this.text.TabIndex = 0;
-            this.text.Text = "Birşeyler";
+            this.text.Text = "";
             this.text.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
             // 
             // timer
