@@ -200,6 +200,7 @@ namespace ColorSplash.Forms {
             "Green",
             "Blue",
             "Purple-Pink"});
+            this.colorChooser.SelectedIndex = 0;
             this.colorChooser.Margin = new System.Windows.Forms.Padding(10, 0, 1, 0);
             this.colorChooser.Name = "colorChooser";
             this.colorChooser.Size = new System.Drawing.Size(159, 28);
