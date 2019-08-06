@@ -44,7 +44,7 @@ namespace ColorSplash.UI {
             // 
             // text
             // 
-            this.text.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(255)))), ((int)(((byte)(175)))), ((int)(((byte)(64)))));
+            this.text.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(64)))), ((int)(((byte)(64)))), ((int)(((byte)(64)))));
             this.text.Dock = System.Windows.Forms.DockStyle.Fill;
             this.text.Font = new System.Drawing.Font("Oswald", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(162)));
             this.text.ForeColor = System.Drawing.Color.White;
@@ -52,7 +52,6 @@ namespace ColorSplash.UI {
             this.text.Name = "text";
             this.text.Size = new System.Drawing.Size(706, 69);
             this.text.TabIndex = 0;
-            this.text.Text = "";
             this.text.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
             // 
             // timer

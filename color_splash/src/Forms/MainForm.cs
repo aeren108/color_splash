@@ -3,7 +3,9 @@ using System;
 using System.Collections.Generic;
 using System.Drawing;
 using System.Runtime.InteropServices;
+using System.Windows;
 using System.Windows.Forms;
+using System.Windows.Media;
 
 namespace ColorSplash.Forms {
     public partial class MainForm : Form {
@@ -30,6 +32,7 @@ namespace ColorSplash.Forms {
             fileChooser = new OpenFileDialog();
             //openFileDialog.Filter = "txt files (*.txt)|*.txt|All files (*.*)|*.*";
             fileChooser.Filter = "JPG Files (*.jpg)|*.jpg|JPEG Files (*.jpeg)|*.jpeg|PNG Files (*.png)|*.png";
+
         }
 
         private void OpenToolStripMenuItem_Click(object sender, EventArgs e) {
@@ -113,7 +116,7 @@ namespace ColorSplash.Forms {
             normalSensitivityToolStripMenuItem.Checked = false;
 
             processor.sensivity = ImageProcessor.HIGH;
-            snackbar.show("Sensıvıty level set to hıgh", 1.3f);
+            snackbar.show("Sensıvıty level set to hıgh", 1.5f);
 
             if (processor.Image != null)
                 pictureBox1.Image = processor.Image; //For higlighting with another sensivity
@@ -127,7 +130,7 @@ namespace ColorSplash.Forms {
             lowSensitivityToolStripMenuItem.Checked = false;
 
             processor.sensivity = ImageProcessor.NORMAL;
-            snackbar.show("Sensıvıty level set to normal", 1.3f);
+            snackbar.show("Sensıvıty level set to normal", 1.5f);
 
             if (processor.Image != null)
                 pictureBox1.Image = processor.Image; //For higlighting with another sensivity
@@ -141,7 +144,7 @@ namespace ColorSplash.Forms {
             normalSensitivityToolStripMenuItem.Checked = false;
 
             processor.sensivity = ImageProcessor.LOW;
-            snackbar.show("Sensıvıty level set to low", 1.3f);
+            snackbar.show("Sensıvıty level set to low", 1.5f);
 
             if (processor.Image != null)
                 pictureBox1.Image = processor.Image; //For higlighting with another sensivity

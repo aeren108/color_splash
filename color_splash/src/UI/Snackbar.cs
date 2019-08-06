@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Windows.Forms;
+using Transitions;
 
 namespace ColorSplash.UI {
     public partial class Snackbar : UserControl {
@@ -42,9 +43,8 @@ namespace ColorSplash.UI {
             //Timer's interval is 100 milisecons (100 miliseconds = 0.1 second)
             counter += 0.1f;
 
-            if (counter >= duration) {
+            if (counter >= duration)
                 end();
-            }
         }
     }
 }
