@@ -5,7 +5,6 @@ using System.Drawing;
 using System.Runtime.InteropServices;
 using System.Windows;
 using System.Windows.Forms;
-using System.Windows.Media;
 
 namespace ColorSplash.Forms {
     public partial class MainForm : Form {
@@ -13,7 +12,8 @@ namespace ColorSplash.Forms {
         private OpenFileDialog fileChooser;
         private ImageProcessor processor;
 
-        private Dictionary<string, int[]> hash;
+        private Dictionary<string, int[]> colorChooserHash;
+        private Dictionary<string, int> filterChooserHash;
         private string path;
 
         public MainForm() {
@@ -22,16 +22,28 @@ namespace ColorSplash.Forms {
 
             processor = new ImageProcessor();
 
-            hash = new Dictionary<string, int[]>();
-            hash.Add("Red", ImageProcessor.RED);
-            hash.Add("Orange-Yellow", ImageProcessor.ORANGE_YELLOW);
-            hash.Add("Green", ImageProcessor.GREEN);
-            hash.Add("Blue", ImageProcessor.BLUE);
-            hash.Add("Purple-Pink", ImageProcessor.PURPLE_PINK);
+            colorChooserHash = new Dictionary<string, int[]>();
+            colorChooserHash.Add("Red", ImageProcessor.RED);
+            colorChooserHash.Add("Orange-Yellow", ImageProcessor.ORANGE_YELLOW);
+            colorChooserHash.Add("Green", ImageProcessor.GREEN);
+            colorChooserHash.Add("Blue", ImageProcessor.BLUE);
+            colorChooserHash.Add("Purple-Pink", ImageProcessor.PURPLE_PINK);
+
+            filterChooserHash = new Dictionary<string, int>();
+            filterChooserHash.Add("Red Filter", ImageProcessor.RED_FILTER);
+            filterChooserHash.Add("Green Filter", ImageProcessor.GREEN_FILTER);
+            filterChooserHash.Add("Blue Filter", ImageProcessor.BLUE_FILTER);
+            filterChooserHash.Add("Grayscale", ImageProcessor.GRAYSCALE);
+            filterChooserHash.Add("Invert", ImageProcessor.INVERT);
+
 
             fileChooser = new OpenFileDialog();
             //openFileDialog.Filter = "txt files (*.txt)|*.txt|All files (*.*)|*.*";
             fileChooser.Filter = "JPG Files (*.jpg)|*.jpg|JPEG Files (*.jpeg)|*.jpeg|PNG Files (*.png)|*.png";
+
+            this.colorChooser.SelectedIndex = 0;
+            this.filterChooser.SelectedIndex = 3;
+            this.MinimumSize = new System.Drawing.Size(650, 500);
 
         }
 
@@ -79,35 +91,6 @@ namespace ColorSplash.Forms {
             }
         }
 
-        private void showOriginal_Click(object sender, EventArgs e) {
-            if (processor.Image != null) {
-                pictureBox1.Image = processor.Image;
-                pictureBox1.Update();
-            }
-        }
-
-        private void showHighlighted_Click(object sender, EventArgs e) {
-            if (processor.buffer != null) {
-                pictureBox1.Image = processor.buffer;
-                pictureBox1.Update();
-            } else {
-                Console.WriteLine("Null");
-            }
-        }
-
-        private void highlight_Click(object sender, EventArgs e) {
-            if (pictureBox1.Image != null && pictureBox1.Image != processor.buffer) {
-                processor.Image = (Bitmap)pictureBox1.Image;
-
-                Bitmap newBmp = processor.HighlightColor(hash[colorChooser.Text]);
-                pictureBox1.Image = newBmp;
-
-                pictureBox1.Update();
-            } else {
-                Console.WriteLine("Resim yok ?");
-            }
-        }
-
         private void HighSensitivityToolStripMenuItem_Click(object sender, EventArgs e) {
             ToolStripMenuItem item = sender as ToolStripMenuItem;
             item.Checked = true;
@@ -148,6 +131,62 @@ namespace ColorSplash.Forms {
 
             if (processor.Image != null)
                 pictureBox1.Image = processor.Image; //For higlighting with another sensivity
+        }
+
+        private void ShowHelpToolStripMenuItem_Click(object sender, EventArgs e) {
+            HelpForm help = new HelpForm();
+            help.Show();
+        }
+
+        private void SwapButton_Click(object sender, EventArgs e) {
+            if (pictureBox1.Image == processor.buffer) {
+                if (processor.Image != null) {
+                    pictureBox1.Image = processor.Image;
+                    pictureBox1.Update();
+
+                    swapButton.Text = "Show Highlighted";
+                    swapButton.Update();
+
+                }
+            } else if (pictureBox1.Image == processor.Image) {
+                if (processor.buffer != null) {
+                    pictureBox1.Image = processor.buffer;
+                    pictureBox1.Update();
+
+                    swapButton.Text = "Show Original";
+                    swapButton.Update();
+                }
+            }
+        }
+
+        private void ApplyButton_Click(object sender, EventArgs e) {
+            if (pictureBox1.Image != null && pictureBox1.Image != processor.buffer) {
+                processor.Image = (Bitmap)pictureBox1.Image;
+
+                Bitmap newBmp = processor.HighlightColor(colorChooserHash[colorChooser.Text], filterChooserHash[filterChooser.Text]);
+                pictureBox1.Image = newBmp;
+
+                swapButton.Text = "Show Original";
+
+                swapButton.Update();
+                pictureBox1.Update();
+            } else {
+                snackbar.show("No ımage ıs uploaded", 1.3f);
+            }
+        }
+
+        private void colorChooser_SelectedIndexChanged(object sender, EventArgs e) {
+            if (processor.Image != null)
+                pictureBox1.Image = processor.Image;
+
+            SendKeys.SendWait("{ESC}");
+        }
+
+        private void FilterChooser_SelectedIndexChanged(object sender, EventArgs e) {
+            if (processor.Image != null)
+                pictureBox1.Image = processor.Image;
+
+            SendKeys.SendWait("{ESC}");
         }
     }
 }

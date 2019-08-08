@@ -63,6 +63,12 @@
     <Reference Include="WindowsBase" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="src\Forms\HelpForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="src\Forms\HelpForm.Designer.cs">
+      <DependentUpon>HelpForm.cs</DependentUpon>
+    </Compile>
     <Compile Include="src\Helpers\ImageProcessor.cs" />
     <Compile Include="src\Forms\MainForm.cs">
       <SubType>Form</SubType>
@@ -78,6 +84,9 @@
     <Compile Include="src\UI\Snackbar.Designer.cs">
       <DependentUpon>Snackbar.cs</DependentUpon>
     </Compile>
+    <EmbeddedResource Include="src\Forms\HelpForm.resx">
+      <DependentUpon>HelpForm.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="src\Forms\MainForm.resx">
       <DependentUpon>MainForm.cs</DependentUpon>
     </EmbeddedResource>
@@ -109,13 +118,8 @@
     <None Include="App.config" />
   </ItemGroup>
   <ItemGroup>
-    <None Include="Resources\PlaceHolderImage.jpg" />
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="Resources\placeholder.jpg" />
-  </ItemGroup>
-  <ItemGroup>
     <Content Include="icon.ico" />
+    <None Include="Resources\placeholder.jpg" />
   </ItemGroup>
   <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

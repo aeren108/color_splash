@@ -30,6 +30,12 @@ namespace ColorSplash.Helpers {
         public static readonly int[] BLUE = { 175, 275, 165, 285, 185, 265 };
         public static readonly int[] PURPLE_PINK = { 260, 325, 250, 340, 270, 315 };
 
+        public const int RED_FILTER = 0;
+        public const int GREEN_FILTER = 1;
+        public const int BLUE_FILTER = 2;
+        public const int GRAYSCALE = 3;
+        public const int INVERT = 4;
+
         public ImageProcessor(Bitmap bmp) {
             this.bitmap = bmp;
             rect = new Rectangle(0, 0, bmp.Width, bmp.Height);
@@ -39,7 +45,7 @@ namespace ColorSplash.Helpers {
             this.bitmap = null;
         }
 
-        public Bitmap HighlightColor(int[] colorRange) {
+        public Bitmap HighlightColor(int[] colorRange, int filter) {
             buffer = (Bitmap)bitmap.Clone();
 
             byte[] pixels = GetPixels();
@@ -57,25 +63,25 @@ namespace ColorSplash.Helpers {
                 int blue = pixels[i - 2];
 
                 c = Color.FromArgb(255, red, green, blue);
-
+                Color filtered = ApplyFilter(c, filter);
                 float hue = c.GetHue();
-                int grayscale = (int)(red * 0.299 + green * 0.587 + blue * 0.114);
+              
 
                 if (colorRange != RED) {
                     if (hue > colorRange[0 + a] && hue < colorRange[1 + a]) {
                         continue;
                     } else {
-                        pixels[i] = (byte)grayscale;
-                        pixels[i - 1] = (byte)grayscale;
-                        pixels[i - 2] = (byte)grayscale;
+                        pixels[i] = (byte)filtered.R;
+                        pixels[i - 1] = (byte)filtered.G;
+                        pixels[i - 2] = (byte)filtered.B;
                     }
                 } else {
                     if (hue < colorRange[0 + a] || hue > colorRange[1 + a]) {
                         continue;
                     } else {
-                        pixels[i] = (byte)grayscale;
-                        pixels[i - 1] = (byte)grayscale;
-                        pixels[i - 2] = (byte)grayscale;
+                        pixels[i] = (byte)filtered.R;
+                        pixels[i - 1] = (byte)filtered.G;
+                        pixels[i - 2] = (byte)filtered.B;
                     }
                 }
             }
@@ -83,22 +89,6 @@ namespace ColorSplash.Helpers {
             savePixels(pixels);
 
             return buffer;
-        }
-
-        private Bitmap ChangeAlpha(Bitmap bitmap, float value) {
-            if (value < 0 || value > 255)
-                throw new Exception("value must be between 0 and 255");
-
-            Bitmap b = new Bitmap(bitmap.Width, bitmap.Height);
-            Graphics graphics = Graphics.FromImage(b);
-            ColorMatrix colorMatrix = new ColorMatrix();
-            colorMatrix.Matrix33 = value / 255f;
-            ImageAttributes imgAttribute = new ImageAttributes();
-            imgAttribute.SetColorMatrix(colorMatrix, ColorMatrixFlag.Default, ColorAdjustType.Bitmap);
-            graphics.DrawImage(bitmap, new Rectangle(0, 0, b.Width, b.Height), 0, 0, bitmap.Width, bitmap.Height, GraphicsUnit.Pixel, imgAttribute);
-            graphics.Dispose();
-
-            return b;
         }
 
         private Bitmap MergeImages(Bitmap[] bitmaps) {
@@ -112,6 +102,81 @@ namespace ColorSplash.Helpers {
             }
 
             return target;
+        }
+
+        public Bitmap PixelateImage(int pixelSize) {
+            buffer = (Bitmap)bitmap.Clone();
+            Graphics graphics = Graphics.FromImage(buffer);
+
+
+            for (int i = 0; i < buffer.Width; i+=pixelSize) {
+                for (int j = 0; j < buffer.Height; j+= pixelSize) {
+
+                    c = buffer.GetPixel(i, j);
+
+                    using (SolidBrush brush = new SolidBrush(c)) {
+                        graphics.FillRectangle(brush, i, j, pixelSize, pixelSize);
+                    }
+                }
+            }
+            graphics.Dispose();
+
+            return buffer;
+        }
+
+        public  Bitmap Resize(Image image, int width, int height) {
+
+            var destRect = new Rectangle(0, 0, width, height);
+            var destImage = new Bitmap(width, height);
+
+            destImage.SetResolution(image.HorizontalResolution, image.VerticalResolution);
+
+            using (var graphics = Graphics.FromImage(destImage)) {
+                graphics.CompositingMode = CompositingMode.SourceCopy;
+                graphics.CompositingQuality = CompositingQuality.HighQuality;
+                graphics.InterpolationMode = InterpolationMode.HighQualityBicubic;
+                graphics.SmoothingMode = SmoothingMode.HighQuality;
+                graphics.PixelOffsetMode = PixelOffsetMode.HighQuality;
+
+                using (var wrapMode = new ImageAttributes()) {
+                    wrapMode.SetWrapMode(WrapMode.TileFlipXY);
+                    graphics.DrawImage(image, destRect, 0, 0, image.Width, image.Height, GraphicsUnit.Pixel, wrapMode);
+                }
+            }
+
+            return destImage;
+        }
+
+        public float map(float value, float fromMin, float fromMax, float toMin, float toMax) {
+            return value * (toMax - toMin) / (fromMax - fromMin) + toMin;
+        }
+
+        private Color ApplyFilter(Color color, int filter) {
+            Color c;
+
+            switch(filter) {
+                case RED_FILTER:
+                    c = Color.FromArgb(255, 200, color.G, color.B);
+                    break;
+                case GREEN_FILTER:
+                    c = Color.FromArgb(255, color.R, 200, color.B);
+                    break;
+                case BLUE_FILTER:
+                    c = Color.FromArgb(255, color.R, color.G, 200);
+                    break;
+                case GRAYSCALE:
+                    int grayscale = (int)(color.R * 0.299 + color.G * 0.587 + color.B * 0.114);
+                    c = Color.FromArgb(255, grayscale, grayscale, grayscale);
+                    break;
+                case INVERT:
+                    c = Color.FromArgb(255, 255 - color.R, 255 - color.G, 255 - color.B);
+                    break;
+                default:
+                    c = Color.White;
+                    break;
+            }
+
+            return c;
         }
 
         private byte[] GetPixels() {

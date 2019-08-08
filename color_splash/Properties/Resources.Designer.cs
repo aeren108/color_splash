@@ -63,9 +63,9 @@ namespace color_splash.Properties {
         /// <summary>
         ///   System.Drawing.Bitmap türünde yerelleştirilmiş bir kaynak arar.
         /// </summary>
-        internal static System.Drawing.Bitmap instructions {
+        internal static System.Drawing.Bitmap placeholder {
             get {
-                object obj = ResourceManager.GetObject("instructions", resourceCulture);
+                object obj = ResourceManager.GetObject("placeholder", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }
