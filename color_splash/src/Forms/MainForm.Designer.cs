@@ -50,15 +50,15 @@ namespace ColorSplash.Forms {
             this.backgroundWorker1 = new System.ComponentModel.BackgroundWorker();
             this.pictureBox1 = new System.Windows.Forms.PictureBox();
             this.panel1 = new System.Windows.Forms.Panel();
+            this.label1 = new System.Windows.Forms.Label();
+            this.filterChooser = new System.Windows.Forms.ComboBox();
+            this.label2 = new System.Windows.Forms.Label();
             this.swapButton = new System.Windows.Forms.Button();
             this.applyButton = new System.Windows.Forms.Button();
-            this.filterChooser = new System.Windows.Forms.ComboBox();
             this.colorChooser = new System.Windows.Forms.ComboBox();
             this.snackbar = new ColorSplash.UI.Snackbar();
             this.applyImageList = new System.Windows.Forms.ImageList(this.components);
             this.swapImageList = new System.Windows.Forms.ImageList(this.components);
-            this.label2 = new System.Windows.Forms.Label();
-            this.label1 = new System.Windows.Forms.Label();
             this.menuStrip1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).BeginInit();
             this.panel1.SuspendLayout();
@@ -201,6 +201,46 @@ namespace ColorSplash.Forms {
             this.panel1.Size = new System.Drawing.Size(1176, 63);
             this.panel1.TabIndex = 5;
             // 
+            // label1
+            // 
+            this.label1.AutoSize = true;
+            this.label1.BackColor = System.Drawing.Color.Transparent;
+            this.label1.Font = new System.Drawing.Font("Segoe UI", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(162)));
+            this.label1.ForeColor = System.Drawing.Color.Black;
+            this.label1.Location = new System.Drawing.Point(14, 43);
+            this.label1.Name = "label1";
+            this.label1.Size = new System.Drawing.Size(129, 20);
+            this.label1.TabIndex = 8;
+            this.label1.Text = "Color to Highlight";
+            // 
+            // filterChooser
+            // 
+            this.filterChooser.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+            this.filterChooser.Font = new System.Drawing.Font("Segoe UI", 10.2F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(162)));
+            this.filterChooser.FormattingEnabled = true;
+            this.filterChooser.Items.AddRange(new object[] {
+            "Red Filter",
+            "Blue Filter",
+            "Green Filter",
+            "Grayscale",
+            "Invert"});
+            this.filterChooser.Location = new System.Drawing.Point(205, 9);
+            this.filterChooser.Name = "filterChooser";
+            this.filterChooser.Size = new System.Drawing.Size(150, 31);
+            this.filterChooser.TabIndex = 3;
+            this.filterChooser.SelectedIndexChanged += new System.EventHandler(this.FilterChooser_SelectedIndexChanged);
+            // 
+            // label2
+            // 
+            this.label2.BackColor = System.Drawing.Color.Transparent;
+            this.label2.Font = new System.Drawing.Font("Segoe UI", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(162)));
+            this.label2.ForeColor = System.Drawing.Color.Black;
+            this.label2.Location = new System.Drawing.Point(201, 43);
+            this.label2.Name = "label2";
+            this.label2.Size = new System.Drawing.Size(86, 24);
+            this.label2.TabIndex = 7;
+            this.label2.Text = "Filter Type";
+            // 
             // swapButton
             // 
             this.swapButton.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
@@ -234,23 +274,6 @@ namespace ColorSplash.Forms {
             this.applyButton.Text = "Apply";
             this.applyButton.UseVisualStyleBackColor = false;
             this.applyButton.Click += new System.EventHandler(this.ApplyButton_Click);
-            // 
-            // filterChooser
-            // 
-            this.filterChooser.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
-            this.filterChooser.Font = new System.Drawing.Font("Segoe UI", 10.2F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(162)));
-            this.filterChooser.FormattingEnabled = true;
-            this.filterChooser.Items.AddRange(new object[] {
-            "Red Filter",
-            "Blue Filter",
-            "Green Filter",
-            "Grayscale",
-            "Invert"});
-            this.filterChooser.Location = new System.Drawing.Point(205, 9);
-            this.filterChooser.Name = "filterChooser";
-            this.filterChooser.Size = new System.Drawing.Size(150, 31);
-            this.filterChooser.TabIndex = 3;
-            this.filterChooser.SelectedIndexChanged += new System.EventHandler(this.FilterChooser_SelectedIndexChanged);
             // 
             // colorChooser
             // 
@@ -297,29 +320,6 @@ namespace ColorSplash.Forms {
             this.swapImageList.Images.SetKeyName(2, "icons8-transfer-32.png");
             this.swapImageList.Images.SetKeyName(3, "icons8-transfer-16.png");
             // 
-            // label2
-            // 
-            this.label2.BackColor = System.Drawing.Color.Transparent;
-            this.label2.Font = new System.Drawing.Font("Segoe UI", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(162)));
-            this.label2.ForeColor = System.Drawing.Color.Black;
-            this.label2.Location = new System.Drawing.Point(201, 43);
-            this.label2.Name = "label2";
-            this.label2.Size = new System.Drawing.Size(86, 24);
-            this.label2.TabIndex = 7;
-            this.label2.Text = "Filter Type";
-            // 
-            // label1
-            // 
-            this.label1.AutoSize = true;
-            this.label1.BackColor = System.Drawing.Color.Transparent;
-            this.label1.Font = new System.Drawing.Font("Segoe UI", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(162)));
-            this.label1.ForeColor = System.Drawing.Color.Black;
-            this.label1.Location = new System.Drawing.Point(14, 43);
-            this.label1.Name = "label1";
-            this.label1.Size = new System.Drawing.Size(129, 20);
-            this.label1.TabIndex = 8;
-            this.label1.Text = "Color to Highlight";
-            // 
             // MainForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(9F, 18F);
@@ -334,7 +334,7 @@ namespace ColorSplash.Forms {
             this.MainMenuStrip = this.menuStrip1;
             this.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
             this.Name = "MainForm";
-            this.Text = "Color Splash v1.0";
+            this.Text = "Color Splash v1.1";
             this.menuStrip1.ResumeLayout(false);
             this.menuStrip1.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).EndInit();
