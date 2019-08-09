@@ -224,6 +224,7 @@ namespace ColorSplash.Forms {
             "Green Filter",
             "Grayscale",
             "Invert"});
+            this.filterChooser.SelectedIndex = 3;
             this.filterChooser.Location = new System.Drawing.Point(205, 9);
             this.filterChooser.Name = "filterChooser";
             this.filterChooser.Size = new System.Drawing.Size(150, 31);
@@ -286,6 +287,7 @@ namespace ColorSplash.Forms {
             "Green",
             "Blue",
             "Purple-Pink"});
+            this.colorChooser.SelectedIndex = 0;
             this.colorChooser.Location = new System.Drawing.Point(18, 9);
             this.colorChooser.Name = "colorChooser";
             this.colorChooser.Size = new System.Drawing.Size(150, 31);
@@ -330,11 +332,13 @@ namespace ColorSplash.Forms {
             this.Controls.Add(this.pictureBox1);
             this.Controls.Add(this.menuStrip1);
             this.Font = new System.Drawing.Font("Microsoft Sans Serif", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(162)));
+            this.HelpButton = true;
             this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
             this.MainMenuStrip = this.menuStrip1;
             this.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
             this.Name = "MainForm";
             this.Text = "Color Splash v1.1";
+            this.Load += new System.EventHandler(this.MainForm_Load);
             this.menuStrip1.ResumeLayout(false);
             this.menuStrip1.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).EndInit();

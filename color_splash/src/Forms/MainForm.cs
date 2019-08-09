@@ -41,8 +41,6 @@ namespace ColorSplash.Forms {
             //openFileDialog.Filter = "txt files (*.txt)|*.txt|All files (*.*)|*.*";
             fileChooser.Filter = "JPG Files (*.jpg)|*.jpg|JPEG Files (*.jpeg)|*.jpeg|PNG Files (*.png)|*.png";
 
-            this.colorChooser.SelectedIndex = 0;
-            this.filterChooser.SelectedIndex = 3;
             this.MinimumSize = new System.Drawing.Size(650, 500);
 
         }
@@ -187,6 +185,10 @@ namespace ColorSplash.Forms {
                 pictureBox1.Image = processor.Image;
 
             SendKeys.SendWait("{ESC}");
+        }
+
+        private void MainForm_Load(object sender, EventArgs e) {
+
         }
     }
 }
