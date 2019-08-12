@@ -11,21 +11,16 @@ You can generate color splash effect with Color Splash.While you are doing this,
 ### Screenshots
 ![](pics/ss1.jpg)
 
+## Built With
+- C# 
+- Windows Forms
+
 ## Getting Started
 
 ### Prerequisites
 - Windows OS
 ### Installing
 You can download the latest version from [here](https://github.com/aeren108/color_splash/releases/download/v1.1/Color_Splash.exe).
-
-## Version History
-- v1.1
-  * Added color filters
-  * UI improvements
-- v1.0
-  * Initial release
-  
-See [releases](https://github.com/aeren108/color_splash/releases)
 
 ## Authors
 - [@aeren108](https://github.com/aeren108)
