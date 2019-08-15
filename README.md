@@ -1,9 +1,6 @@
 # Color Splash
 Color Splash provides you to achieve color splash effect as known as selective color effect on your images.<br>
 
-## Description
-You can generate color splash effect with Color Splash.While you are doing this, you can grayscale, color filter or invert colors rest of the image.
-
 ### Built With
 - C# 
 - Windows Forms
