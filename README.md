@@ -19,7 +19,7 @@ Example images created by Color Splash:<br>
 ### Prerequisites
 - Windows OS
 ### Installing
-You can download the latest version from [here](https://github.com/aeren108/color_splash/releases/download/v1.1/Color_Splash.exe).
+[Download](https://github.com/aeren108/color_splash/releases/download/v1.1/Color_Splash.exe) the latest release.
 
 ## Authors
 - [@aeren108](https://github.com/aeren108)
