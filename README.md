@@ -1,5 +1,5 @@
 # Color Splash
-Color Splash provides you to achieve color splash effect as known as selective color effect on your images.<br>
+Color Splash provides you to achieve color splash effect (aka selective color effect) on your images.<br>
 
 ### Built With
 - C# 
