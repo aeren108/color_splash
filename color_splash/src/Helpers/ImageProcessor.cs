@@ -3,6 +3,7 @@ using System.Drawing;
 using System.Drawing.Drawing2D;
 using System.Drawing.Imaging;
 using System.Runtime.InteropServices;
+using System.Threading.Tasks;
 
 namespace ColorSplash.Helpers {
 
@@ -37,16 +38,24 @@ namespace ColorSplash.Helpers {
         public const int INVERT = 4;
 
         public ImageProcessor(Bitmap bmp) {
-            this.bitmap = bmp;
+            bitmap = bmp;
             rect = new Rectangle(0, 0, bmp.Width, bmp.Height);
         }
 
         public ImageProcessor() {
-            this.bitmap = null;
+            bitmap = null;
         }
 
-        public Bitmap HighlightColor(int[] colorRange, int filter) {
-            buffer = (Bitmap)bitmap.Clone();
+        public async Task<Bitmap> HighlightColor(int[] colorRange, int filter) {
+            Bitmap bmp = await Task.Run(() => {
+                return ChangePixels(colorRange, filter);
+            });
+
+            return bmp;
+        }
+
+        private Bitmap ChangePixels(int[] colorRange, int filter) {
+            buffer = (Bitmap) bitmap.Clone();
 
             byte[] pixels = GetPixels();
 
@@ -65,23 +74,23 @@ namespace ColorSplash.Helpers {
                 c = Color.FromArgb(255, red, green, blue);
                 Color filtered = ApplyFilter(c, filter);
                 float hue = c.GetHue();
-              
+
 
                 if (colorRange != RED) {
                     if (hue > colorRange[0 + a] && hue < colorRange[1 + a]) {
                         continue;
                     } else {
-                        pixels[i] = (byte)filtered.R;
-                        pixels[i - 1] = (byte)filtered.G;
-                        pixels[i - 2] = (byte)filtered.B;
+                        pixels[i] = (byte) filtered.R;
+                        pixels[i - 1] = (byte) filtered.G;
+                        pixels[i - 2] = (byte) filtered.B;
                     }
                 } else {
                     if (hue < colorRange[0 + a] || hue > colorRange[1 + a]) {
                         continue;
                     } else {
-                        pixels[i] = (byte)filtered.R;
-                        pixels[i - 1] = (byte)filtered.G;
-                        pixels[i - 2] = (byte)filtered.B;
+                        pixels[i] = (byte) filtered.R;
+                        pixels[i - 1] = (byte) filtered.G;
+                        pixels[i - 2] = (byte) filtered.B;
                     }
                 }
             }

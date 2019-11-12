@@ -157,17 +157,24 @@ namespace ColorSplash.Forms {
             }
         }
 
-        private void ApplyButton_Click(object sender, EventArgs e) {
+        private async void ApplyButton_Click(object sender, EventArgs e) {
             if (pictureBox1.Image != null && pictureBox1.Image != processor.buffer) {
                 processor.Image = (Bitmap)pictureBox1.Image;
 
-                Bitmap newBmp = processor.HighlightColor(colorChooserHash[colorChooser.Text], filterChooserHash[filterChooser.Text]);
+                this.UseWaitCursor = true;
+                applyButton.Enabled = false;
+
+                Bitmap newBmp =  await processor.HighlightColor(colorChooserHash[colorChooser.Text], filterChooserHash[filterChooser.Text]);
                 pictureBox1.Image = newBmp;
+
+                this.UseWaitCursor = false;
+                applyButton.Enabled = true;
 
                 swapButton.Text = "Show Original";
 
                 swapButton.Update();
                 pictureBox1.Update();
+                
             } else {
                 snackbar.show("No ımage ıs uploaded", 1.3f);
             }
