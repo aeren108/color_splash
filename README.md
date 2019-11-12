@@ -1,8 +1,5 @@
 # Color Splash
-Color Splash provides you to achieve color splash effect as known as selective color effect in your images.<br>
-
-## Description
-You can generate color splash effect with Color Splash.While you are doing this, you can grayscale, color filter or invert colors rest of the image.
+Color Splash provides you to achieve color splash effect (aka selective color effect) on your images.<br>
 
 ### Built With
 - C# 
@@ -22,7 +19,7 @@ Example images created by Color Splash:<br>
 ### Prerequisites
 - Windows OS
 ### Installing
-You can download the latest version from [here](https://github.com/aeren108/color_splash/releases/download/v1.1/Color_Splash.exe).
+[Download](https://github.com/aeren108/color_splash/releases/download/v1.1/Color_Splash.exe) the latest release.
 
 ## Authors
 - [@aeren108](https://github.com/aeren108)
