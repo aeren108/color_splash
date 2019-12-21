@@ -36,6 +36,19 @@ namespace ColorSplash.Helpers {
         public const int BLUE_FILTER = 2;
         public const int GRAYSCALE = 3;
         public const int INVERT = 4;
+        public Bitmap Image {
+            get {
+                return bitmap;
+            }
+            set {
+                bitmap = value;
+
+                if (value != null)
+                    rect = new Rectangle(0, 0, bitmap.Width, bitmap.Height);
+
+                buffer = null;
+            }
+        }
 
         public ImageProcessor(Bitmap bmp) {
             bitmap = bmp;
@@ -46,15 +59,14 @@ namespace ColorSplash.Helpers {
             bitmap = null;
         }
 
-        public async Task<Bitmap> HighlightColor(int[] colorRange, int filter) {
-            Bitmap bmp = await Task.Run(() => {
-                return ChangePixels(colorRange, filter);
+        //Applying effect without interrupting main ui thread.
+        public async Task<Bitmap> HighlightColorAsync(int[] colorRange, int filter) {
+            return await Task.Run(() => {
+                return ApplyHighlight(colorRange, filter);
             });
-
-            return bmp;
         }
 
-        private Bitmap ChangePixels(int[] colorRange, int filter) {
+        private Bitmap ApplyHighlight(int[] colorRange, int filter) {
             buffer = (Bitmap) bitmap.Clone();
 
             byte[] pixels = GetPixels();
@@ -77,7 +89,7 @@ namespace ColorSplash.Helpers {
 
 
                 if (colorRange != RED) {
-                    if (hue > colorRange[0 + a] && hue < colorRange[1 + a]) {
+                    if (hue >= colorRange[0 + a] && hue <= colorRange[1 + a]) {
                         continue;
                     } else {
                         pixels[i] = (byte) filtered.R;
@@ -85,7 +97,7 @@ namespace ColorSplash.Helpers {
                         pixels[i - 2] = (byte) filtered.B;
                     }
                 } else {
-                    if (hue < colorRange[0 + a] || hue > colorRange[1 + a]) {
+                    if (hue <= colorRange[0 + a] || hue >= colorRange[1 + a]) {
                         continue;
                     } else {
                         pixels[i] = (byte) filtered.R;
@@ -98,19 +110,6 @@ namespace ColorSplash.Helpers {
             savePixels(pixels);
 
             return buffer;
-        }
-
-        private Bitmap MergeImages(Bitmap[] bitmaps) {
-            Bitmap target = new Bitmap(bitmaps[0].Width, bitmaps[0].Height, PixelFormat.Format32bppArgb);
-
-            Graphics g = Graphics.FromImage(target);
-            g.CompositingMode = CompositingMode.SourceOver;
-
-            for (int i = 0; i < bitmaps.Length; i++) {
-                g.DrawImage(bitmaps[i], 0, 0);
-            }
-
-            return target;
         }
 
         public Bitmap PixelateImage(int pixelSize) {
@@ -174,7 +173,7 @@ namespace ColorSplash.Helpers {
                     c = Color.FromArgb(255, color.R, color.G, 200);
                     break;
                 case GRAYSCALE:
-                    int grayscale = (int)(color.R * 0.299 + color.G * 0.587 + color.B * 0.114);
+                    int grayscale = (int)((int) (color.R * 0.299) + (int)(color.G * 0.587) + (int)(color.B * 0.114));
                     c = Color.FromArgb(255, grayscale, grayscale, grayscale);
                     break;
                 case INVERT:
@@ -205,21 +204,6 @@ namespace ColorSplash.Helpers {
 
             Marshal.Copy(pixels, 0, data.Scan0, buffer.Width * buffer.Height * 3);
             buffer.UnlockBits(data);
-        }
-
-        public Bitmap Image {
-            get {
-                return bitmap;
-            }
-
-            set {
-                bitmap = value;
-
-                if (value != null)
-                    rect = new Rectangle(0, 0, bitmap.Width, bitmap.Height);
-
-                buffer = null;
-            }
         }
     }
 }
