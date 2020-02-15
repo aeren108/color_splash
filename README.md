@@ -21,8 +21,5 @@ Example images created by Color Splash:<br>
 ### Installing
 [Download](https://github.com/aeren108/color_splash/releases/download/v1.1/Color_Splash.exe) the latest release.
 
-## Authors
-- [@aeren108](https://github.com/aeren108)
-
 ## License
 This project is licensed under the MIT License, see the LICENSE.md file for details.
